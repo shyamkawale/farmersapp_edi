@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "181509959856",
+    "firebase_url": "https://farmersapp-edi-default-rtdb.firebaseio.com",
+    "project_id": "farmersapp-edi",
+    "storage_bucket": "farmersapp-edi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181509959856:android:9197112901ec7e0abd4b75",
+        "android_client_info": {
+          "package_name": "com.example.farmersapp_edi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181509959856-h95ocij8eb6v2ihbepv89nnaatstgmhk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.farmersapp_edi",
+            "certificate_hash": "5d0556ecc6372996413b53609a6d06efe2d3867b"
+          }
+        },
+        {
+          "client_id": "181509959856-hpqrrtes4e7d80cra2h2n9119e14npb8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsk9JA-492l43O-pS2zOSx-02erC9RXlU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181509959856-hpqrrtes4e7d80cra2h2n9119e14npb8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
