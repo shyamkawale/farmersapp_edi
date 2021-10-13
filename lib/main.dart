@@ -1,4 +1,5 @@
-import 'package:farmersapp_edi/homepage.dart';
+import 'package:farmersapp_edi/screens/auth/login_screen.dart';
+import 'package:farmersapp_edi/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -39,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SplashScreen(
       seconds: 10,
-      navigateAfterSeconds: HomePage(),
+      navigateAfterSeconds: LoginScreen(),
       image: Image.asset(
         'assets/images/farmers.webp',
       ),
