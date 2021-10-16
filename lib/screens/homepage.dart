@@ -1,20 +1,29 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final String user;
+  HomePage(this.user);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(this.user);
 }
 
 class _HomePageState extends State<HomePage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String user;
+  _HomePageState(this.user);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("new Appbar"),
-      ),
-      body: Text("shyam"),
-    );
+        appBar: AppBar(
+          title: Text("new Appbar"),
+        ),
+        body: Center(
+          child: Column(
+            children: [Text("shyam"), Text(user)],
+          ),
+        ));
   }
 }

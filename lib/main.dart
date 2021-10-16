@@ -1,5 +1,6 @@
 import 'package:farmersapp_edi/screens/auth/login_screen.dart';
 import 'package:farmersapp_edi/screens/homepage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -8,6 +9,7 @@ import 'package:splashscreen/splashscreen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
+    await Firebase.initializeApp();
     // cameras = await availableCameras();
     // cameras_pickimage = await availableCameras();
   } on CameraException catch (e) {
