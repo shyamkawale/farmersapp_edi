@@ -1,5 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:farmersapp_edi/components/custom_bottom_nav_bar.dart';
+import 'package:farmersapp_edi/screens/home/components/body.dart';
 import 'package:flutter/material.dart';
+
+import '../../enums.dart';
 
 class HomePage extends StatefulWidget {
   final String user;
@@ -10,20 +13,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  FirebaseAuth auth = FirebaseAuth.instance;
   String user;
   _HomePageState(this.user);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("new Appbar"),
-        ),
-        body: Center(
-          child: Column(
-            children: [Text("shyam"), Text(user)],
-          ),
-        ));
+      body: Body(),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
+    );
   }
 }

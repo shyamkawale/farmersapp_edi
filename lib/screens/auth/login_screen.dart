@@ -6,7 +6,7 @@ import 'package:farmersapp_edi/components/rounded_password_field.dart';
 import 'package:farmersapp_edi/components/text_field_container.dart';
 import 'package:farmersapp_edi/constants.dart';
 import 'package:farmersapp_edi/screens/auth/signup_screen.dart';
-import 'package:farmersapp_edi/screens/homepage.dart';
+import 'package:farmersapp_edi/screens/home/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController email_controller = TextEditingController();
   TextEditingController password_controller = TextEditingController();
   bool loading = false;
+  bool boolobscure = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -106,15 +107,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: TextField(
                             controller: password_controller,
                             cursorColor: kPrimaryColor,
+                            obscureText: boolobscure,
                             decoration: InputDecoration(
                               icon: Icon(
                                 Icons.lock,
                                 color: kPrimaryColor,
                               ),
-                              suffixIcon: Icon(
-                                Icons.visibility,
-                                color: kPrimaryColor,
-                              ),
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      boolobscure = !boolobscure;
+                                    });
+                                  },
+                                  icon: boolobscure
+                                      ? Icon(
+                                          Icons.visibility_off,
+                                          color: kPrimaryColor,
+                                        )
+                                      : Icon(
+                                          Icons.visibility,
+                                          color: kPrimaryColor,
+                                        )),
                               hintText: "Password",
                               border: InputBorder.none,
                             ),
@@ -149,9 +162,9 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     try {
       var user = (await auth.signInWithEmailAndPassword(
-              // email: email_controller.text, password: password_controller.text))
-              email: "s@gmail.com",
-              password: "123456"))
+              email: email_controller.text, password: password_controller.text))
+          // email: "s@gmail.com",
+          // password: "123456"))
           .user;
       String userid = user!.uid;
       if (userid != null) {

@@ -7,7 +7,7 @@ import 'package:farmersapp_edi/components/social_icon.dart';
 import 'package:farmersapp_edi/components/text_field_container.dart';
 import 'package:farmersapp_edi/constants.dart';
 import 'package:farmersapp_edi/screens/auth/login_screen.dart';
-import 'package:farmersapp_edi/screens/homepage.dart';
+import 'package:farmersapp_edi/screens/home/homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
