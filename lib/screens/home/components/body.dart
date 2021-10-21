@@ -1,6 +1,7 @@
 import 'package:farmersapp_edi/components/rounded_button.dart';
 import 'package:farmersapp_edi/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:farmersapp_edi/screens/Prediction_modules/predModel.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -21,6 +22,8 @@ class Body extends StatelessWidget {
                   //               context,
                   //               MaterialPageRoute(
                   //                   builder: (context) => //crop pred file),
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>PredModel()));
                   //             );
                 }),
             RoundedButton(
