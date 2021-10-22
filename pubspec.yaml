@@ -68,6 +68,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/ml_model.tflite
+    - assets/
 #    - assets/other/
   #   - images/a_dot_ham.jpeg
 
