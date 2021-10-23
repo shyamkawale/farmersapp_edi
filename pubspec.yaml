@@ -33,9 +33,12 @@ dependencies:
   flutter_svg:
   firebase_auth:
   firebase_core:
+  firebase_database:
   toast:
   flutter_spinkit:
   cloud_firestore:
+  tflite_flutter:
+  
 
 dev_dependencies:
   flutter_test:
@@ -56,7 +59,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/other/
+    # - assets/other/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -70,12 +73,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Muli
+      fonts:
+        - asset: assets/fonts/muli/Muli.ttf
+        - asset: assets/fonts/muli/Muli-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/muli/Muli-Light.ttf
+          weight: 300
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

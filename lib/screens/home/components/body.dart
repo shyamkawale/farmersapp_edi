@@ -1,9 +1,31 @@
 import 'package:farmersapp_edi/components/rounded_button.dart';
 import 'package:farmersapp_edi/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+class Body extends StatefulWidget {
+  final User user;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  Body(this.user);
+
+  @override
+  _BodyState createState() => _BodyState(this.user);
+}
+
+class _BodyState extends State<Body> {
+  User user;
+  _BodyState(this.user);
+  FirebaseAuth auth = FirebaseAuth.instance;
+  dynamic user_name;
+  final dbRef = FirebaseDatabase.instance.reference().child("Users");
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +35,19 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 20),
-            Text("hello"),
+            FutureBuilder(
+                future: dbRef.child(user.uid).once(),
+                builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    Map<String, String> map = Map.from(snapshot.data!.value);
+                    print(map);
+                    return (map.containsKey('name')
+                        ? Text("Hello " + map['name'].toString())
+                        : Text("No name"));
+                  } else {
+                    return Text("***Complete your profile***");
+                  }
+                }),
             RoundedButton(
                 text: "Crop Pred",
                 press: () {

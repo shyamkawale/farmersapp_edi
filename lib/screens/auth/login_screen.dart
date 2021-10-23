@@ -162,17 +162,17 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     try {
       var user = (await auth.signInWithEmailAndPassword(
-              email: email_controller.text, password: password_controller.text))
-          // email: "s@gmail.com",
-          // password: "123456"))
+              // email: email_controller.text, password: password_controller.text))
+              email: "s@gmail.com",
+              password: "123456"))
           .user;
       String userid = user!.uid;
       if (userid != null) {
-        setState(() {
-          loading = false;
-        });
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HomePage(user.uid)));
+        // setState(() {
+        //   loading = false;
+        // });
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage(user)));
       } else {
         Container(
           child: AlertDialog(
