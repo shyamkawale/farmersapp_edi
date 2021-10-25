@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:farmersapp_edi/screens/auth/login_screen.dart';
 import 'package:farmersapp_edi/screens/home/homepage.dart';
 import 'package:farmersapp_edi/theme.dart';

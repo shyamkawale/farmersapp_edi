@@ -27,18 +27,28 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  #  firebase_auth: ^3.1.3
   cupertino_icons: ^1.0.2
   camera:
   splashscreen:
   flutter_svg:
-  firebase_auth:
+  firebase_auth: 3.1.3
   firebase_core:
   firebase_database:
-  toast:
   flutter_spinkit:
   cloud_firestore:
-  tflite_flutter:
-  
+
+  tflite_flutter: ^0.8.0
+  math_expressions:
+  font_awesome_flutter:
+  http:
+
+#  tflite_flutter:
+#  math_expressions: ^2.2.0
+#  font_awesome_flutter: ^8.7.0
+#  http: ^0.12.0+4
+
+
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +69,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    # - assets/other/
+    - assets/
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
