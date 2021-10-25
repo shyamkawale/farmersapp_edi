@@ -14,7 +14,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
-import 'package:toast/toast.dart';
+// import 'package:toast/toast.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -190,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } catch (e) {
       print(e);
     } finally {
-      Toast.show("Registration Successful!", context);
+      // Toast.show("Registration Successful!", context);
       Navigator.pop(context);
     }
   }
