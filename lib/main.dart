@@ -1,5 +1,6 @@
 import 'package:farmersapp_edi/screens/auth/login_screen.dart';
 import 'package:farmersapp_edi/screens/home/homepage.dart';
+import 'package:farmersapp_edi/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -23,10 +24,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Farmers App EDI Project',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      //   visualDensity: VisualDensity.adaptivePlatformDensity,
+      // ),
+      theme: theme(),
       home: MyHomePage(),
     );
   }

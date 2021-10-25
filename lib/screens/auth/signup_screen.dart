@@ -71,14 +71,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: <Widget>[
                   SvgPicture.asset(
                     "assets/icons/signup.svg",
-                    height: size.height * 0.35,
+                    height: size.height * 0.3,
                   ),
                   SizedBox(height: size.height * 0.03),
                   Text(
                     "SIGNUP",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: size.height * 0.03),
+                  SizedBox(height: size.height * 0.02),
                   TextFieldContainer(
                     child: TextField(
                       controller: email_controller,
@@ -93,20 +93,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  TextFieldContainer(
-                    child: TextField(
-                      controller: mobile_controller,
-                      cursorColor: kPrimaryColor,
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.phone_android,
-                          color: kPrimaryColor,
-                        ),
-                        hintText: "Mobile",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
+                  // TextFieldContainer(
+                  //   child: TextField(
+                  //     controller: mobile_controller,
+                  //     cursorColor: kPrimaryColor,
+                  //     decoration: InputDecoration(
+                  //       icon: Icon(
+                  //         Icons.phone_android,
+                  //         color: kPrimaryColor,
+                  //       ),
+                  //       hintText: "Mobile",
+                  //       border: InputBorder.none,
+                  //     ),
+                  //   ),
+                  // ),
                   TextFieldContainer(
                     child: TextField(
                       controller: password_controller,
@@ -148,6 +148,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       );
                     },
+                  ),
+                  Text(
+                    "By continuing your confirm that you agree \nwith our Term and Condition",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.caption,
                   ),
                   OrDivider(),
                   Row(
