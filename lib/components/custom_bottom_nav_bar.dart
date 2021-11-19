@@ -50,12 +50,12 @@ class CustomBottomNavBar extends StatelessWidget {
                         : inActiveIconColor,
                   ),
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => HomePage("user"),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(user),
+                      ),
+                    );
                   }),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
