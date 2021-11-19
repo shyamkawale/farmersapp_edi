@@ -79,10 +79,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: size.height * 0.35,
                         ),
                         SizedBox(height: size.height * 0.03),
-                        // RoundedInputField(
-                        //   hintText: "Your Email",
-                        //   onChanged: (value) {},
-                        // ),
                         TextFieldContainer(
                           child: TextField(
                             controller: email_controller,
@@ -95,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Icons.email,
                                 color: kPrimaryColor,
                               ),
+                              labelText: "Email",
                               hintText: "Your Email",
                               border: InputBorder.none,
                               // enabledBorder: OutlineInputBorder(
@@ -128,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Icons.visibility,
                                           color: kPrimaryColor,
                                         )),
+                              labelText: "Password",
                               hintText: "Password",
                               border: InputBorder.none,
                             ),
@@ -162,9 +160,9 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     try {
       var user = (await auth.signInWithEmailAndPassword(
-              // email: email_controller.text, password: password_controller.text))
-              email: "s@gmail.com",
-              password: "123456"))
+              email: email_controller.text, password: password_controller.text))
+          // email: "shy@gmail.com",
+          // password: "123456"))
           .user;
       String userid = user!.uid;
       if (userid != null) {

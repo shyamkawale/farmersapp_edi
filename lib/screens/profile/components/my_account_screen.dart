@@ -1,10 +1,18 @@
+// import 'dart:ffi';
+import 'dart:io';
+
 import 'package:farmersapp_edi/components/rounded_button.dart';
 import 'package:farmersapp_edi/components/text_field_container.dart';
 import 'package:farmersapp_edi/constants.dart';
 import 'package:farmersapp_edi/size_config.dart';
+import 'package:farmersapp_edi/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class MyAccountScreen extends StatefulWidget {
   final User user;
@@ -18,10 +26,26 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   User user;
   _MyAccountScreenState(this.user);
   FirebaseAuth auth = FirebaseAuth.instance;
-  TextEditingController controllerName = TextEditingController();
+  TextEditingController controllerUserName = TextEditingController();
+  TextEditingController controllerFirstName = TextEditingController();
+  TextEditingController controllerLastName = TextEditingController();
   TextEditingController controllerMobile = TextEditingController();
+  // TextEditingController controllerAddress = TextEditingController();
+
+  // TextEditingController controllerUserName = TextEditingController();
+
   final dbRef_users = FirebaseDatabase.instance.reference().child("Users");
-  List param = ['name', 'mobile'];
+  final ImagePicker _picker = ImagePicker();
+  final List<Map> address = [
+    {"city": "akola", "pincode": 444004},
+    {"city": "pune", "pincode": 413037}
+  ];
+  // List param = ['username', 'firstname', 'lastname', 'mobile'];
+  late XFile _image;
+  String cloudimagepath = "";
+  final List<String> sellingitemslist = ["0"];
+  final List<String> orderslist = ["0"];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,29 +56,62 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         .child(user.uid.toString())
         .once()
         .then((DataSnapshot dataSnapshot) async {
-      Map<String, String> map = Map.from(dataSnapshot.value);
+      Map<dynamic, dynamic> map = Map.from(dataSnapshot.value);
       if (dataSnapshot.value != null) {
-        controllerName.text =
-            (map.containsKey('name') ? map['name'] : "Add name")!;
+        controllerUserName.text =
+            (map.containsKey('username') ? map['username'] : "")!;
+        controllerFirstName.text =
+            (map.containsKey('firstname') ? map['firstname'] : "")!;
+        controllerLastName.text =
+            (map.containsKey('lastname') ? map['lastname'] : "")!;
         controllerMobile.text =
-            (map.containsKey('mobile') ? map['mobile'] : "Add mobile")!;
+            (map.containsKey('mobile') ? map['mobile'] : "")!;
         print(map.toString());
+        setState(() {
+          cloudimagepath =
+              (map.containsKey('profilepic') ? map['profilepic'] : "");
+        });
       }
     });
-
-    // FutureBuilder(
-    //     future: dbRef_users.child(user.uid).once(),
-    //     builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
-
-    //     });
   }
 
   @override
   Widget build(BuildContext context) {
+    Future uploadImage(BuildContext context) async {
+      String fileName = basename(_image.path);
+      File file = File(_image.path);
+      try {
+        await FirebaseStorage.instance
+            .ref()
+            .child("/users")
+            .child(fileName)
+            .putFile(file);
+        String downloadlink = await FirebaseStorage.instance
+            .ref()
+            .child("/users")
+            .child(fileName)
+            .getDownloadURL();
+        setState(() {
+          cloudimagepath = downloadlink;
+          print("new file path: " + cloudimagepath);
+        });
+      } on FirebaseException catch (e) {
+        // e.g, e.code == 'canceled'
+        print("image uploading crash");
+      }
+    }
+
+    Future getImageGallery() async {
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      setState(() {
+        _image = image!;
+        print('Image Path: ' + _image.path);
+      });
+      uploadImage(context);
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Account'),
-      ),
+      appBar: customAppBar("My Account"),
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,
@@ -63,17 +120,56 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 10),
+                  SizedBox(height: 1),
                   Text(
-                    "Complete Profile",
+                    "Complete Your Profile",
                     style: headingStyle,
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    "Complete your details or continue  \nwith social media",
-                    textAlign: TextAlign.center,
+                  SizedBox(height: 4),
+                  // Text(
+                  //   "Complete/Update your details",
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(padding: EdgeInsets.all(10)),
+                      Align(
+                        alignment: Alignment.center,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.black45,
+                          child: ClipOval(
+                            child: new SizedBox(
+                                width: 95.0,
+                                height: 95.0,
+                                child: (cloudimagepath == "")
+                                    ? Image.asset(
+                                        "assets/icons/farmer user.ico",
+                                        fit: BoxFit.fill,
+                                      )
+                                    : Image.network(
+                                        cloudimagepath,
+                                        fit: BoxFit.fill,
+                                      )),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 30.0),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.camera_alt,
+                            size: 30.0,
+                          ),
+                          onPressed: () {
+                            getImageGallery();
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 4),
                   TextFieldContainer(
                     child: TextField(
                       cursorColor: kPrimaryColor,
@@ -82,13 +178,43 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           Icons.photo_camera_front_outlined,
                           color: kPrimaryColor,
                         ),
-                        hintText: "Add Your Name..",
+                        hintText: "Add Your UserName..",
                         border: InputBorder.none,
                       ),
-                      controller: controllerName,
+                      controller: controllerUserName,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 2),
+                  TextFieldContainer(
+                    child: TextField(
+                      cursorColor: kPrimaryColor,
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.photo_camera_front_outlined,
+                          color: kPrimaryColor,
+                        ),
+                        hintText: "Add Your FirstName..",
+                        border: InputBorder.none,
+                      ),
+                      controller: controllerFirstName,
+                    ),
+                  ),
+                  SizedBox(height: 2),
+                  TextFieldContainer(
+                    child: TextField(
+                      cursorColor: kPrimaryColor,
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.photo_camera_front_outlined,
+                          color: kPrimaryColor,
+                        ),
+                        hintText: "Add Your LastName..",
+                        border: InputBorder.none,
+                      ),
+                      controller: controllerLastName,
+                    ),
+                  ),
+                  SizedBox(height: 2),
                   TextFieldContainer(
                     child: TextField(
                       cursorColor: kPrimaryColor,
@@ -103,18 +229,39 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       controller: controllerMobile,
                     ),
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 2),
                   RoundedButton(
-                    text: "UPDATE/ADD DETAILS",
-                    press: () => FirebaseDatabase.instance
-                        .reference()
-                        .child("Users")
-                        .child(user.uid)
-                        .set({
-                      'name': controllerName.text,
-                      'mobile': controllerMobile.text
-                    }),
-                  ),
+                      text: "UPDATE/ADD DETAILS",
+                      press: () {
+                        try {
+                          FirebaseDatabase.instance
+                              .reference()
+                              .child("Users")
+                              .child(user.uid)
+                              .set({
+                            'username': controllerUserName.text,
+                            'firstname': controllerFirstName.text,
+                            'lastname': controllerLastName.text,
+                            'mobile': controllerMobile.text,
+                            'address': address,
+                            'profilepic': cloudimagepath,
+                            'sellingitems': sellingitemslist,
+                            'orderslist': orderslist,
+                          });
+                          VxToast.show(context,
+                              msg: "your details are updated succesfully",
+                              position: VxToastPosition.top,
+                              textColor: Colors.blue,
+                              bgColor: Colors.white);
+                        } catch (e) {
+                          VxToast.show(context,
+                              msg: e.toString(),
+                              position: VxToastPosition.top,
+                              showTime: 4000,
+                              textColor: Colors.red,
+                              bgColor: Colors.white);
+                        }
+                      }),
                   Text(
                     "By continuing your confirm that you agree \nwith our Term and Condition",
                     textAlign: TextAlign.center,

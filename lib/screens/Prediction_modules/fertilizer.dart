@@ -1,9 +1,13 @@
+import 'package:farmersapp_edi/components/text_field_container.dart';
+import 'package:farmersapp_edi/constants.dart';
+import 'package:farmersapp_edi/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:convert';
+import 'package:velocity_x/velocity_x.dart';
 
 class Fertilizer extends StatefulWidget {
   @override
@@ -225,168 +229,247 @@ class _PredModelState extends State<Fertilizer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              // N
-              controller: N_Controller,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.left,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'PLEASE ENTER Nitrogen content',
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-            ),
-
-            TextField(
-              // P
-              controller: P_Controller,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.left,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'PLEASE ENTER Phosphorus Content',
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-            ),
-
-            TextField(
-              // K
-              controller: K_Controller,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.left,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'PLEASE ENTER Potassium Content',
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-            ),
-
-            // TextField(                                           // Ph
-            //   controller: Ph_Controller,
-            //   keyboardType: TextInputType.number,
-            //   textAlign: TextAlign.left,
-            //   decoration: InputDecoration(
-            //     border: InputBorder.none,
-            //     hintText: 'PLEASE ENTER Ph value',
-            //     hintStyle: TextStyle(color: Colors.grey),
-            //   ),
-            // ),
-            //
-            // TextField(                                               // Rain
-            //   controller: Rain_Controller,
-            //   keyboardType: TextInputType.number,
-            //   textAlign: TextAlign.left,
-            //   decoration: InputDecoration(
-            //     border: InputBorder.none,
-            //     hintText: 'PLEASE ENTER Rain Content',
-            //     hintStyle: TextStyle(color: Colors.grey),
-            //   ),
-            // ),
-            //
-            TextField(
-              // Moist
-              controller: Moist_Controller,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.left,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'PLEASE ENTER Moist',
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-            ),
-
-            TextField(
-              // City
-              controller: City_Controller,
-
-              textAlign: TextAlign.left,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'PLEASE ENTER City (Temp, Humidity feteched by API)',
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
-            ),
-
-            // Text(
-            //   "change the input values in code to get the prediction",
-            //   style: TextStyle(fontSize: 16),
-            // ),
-            // Row(
-            // children: [ //Text("Soil Type ->  "),
-
-            DropdownButton<Usertemp>(
-              // Soil Type
-              hint: new Text("Select Soil Type"),
-              value: Soil_,
-              onChanged: (Usertemp? newValue) {
-                setState(() {
-                  Soil_ = newValue!;
-                });
-              },
-              items: soil.map((Usertemp usertemp) {
-                return new DropdownMenuItem<Usertemp>(
-                  value: usertemp,
-                  child: new Text(
-                    usertemp.name,
-                    style: new TextStyle(color: Colors.black),
+      appBar: customAppBar("Fertilizer prediction"),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 5),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: "    Add your soil details".text.xl.make(),
+                ),
+                SizedBox(height: 5),
+                TextFieldContainer(
+                  child: TextField(
+                    // N
+                    controller: N_Controller,
+                    keyboardType: TextInputType.number,
+                    cursorColor: kPrimaryColor,
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.photo_camera_front_outlined,
+                        color: kPrimaryColor,
+                      ),
+                      border: InputBorder.none,
+                      labelText: "Nitrogen Content",
+                      hintText: 'PLEASE ENTER Nitrogen content',
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
                   ),
-                );
-              }).toList(),
-            ),
-            // ],
-            //),
-
-            // Row(
-            //   children: [ //Text("Crop Type ->  "),
-            DropdownButton<Usertemp>(
-              // Crop Type
-              hint: new Text("Select Crop Type"),
-              value: Crop_,
-              onChanged: (Usertemp? newValue) {
-                setState(() {
-                  Crop_ = newValue!;
-                });
-              },
-              items: crop.map((Usertemp usertemp) {
-                return new DropdownMenuItem<Usertemp>(
-                  value: usertemp,
-                  child: new Text(
-                    usertemp.name,
-                    style: new TextStyle(color: Colors.black),
+                ),
+                SizedBox(height: 2),
+                TextFieldContainer(
+                  child: TextField(
+                    cursorColor: kPrimaryColor,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.photo_camera_front_outlined,
+                        color: kPrimaryColor,
+                      ),
+                      labelText: "Phosphorus Content",
+                      hintText: "PLEASE ENTER Phosphorus Content",
+                      border: InputBorder.none,
+                    ),
+                    controller: P_Controller,
                   ),
-                );
-              }).toList(),
-            ),
-            // ],
-            //),
+                ),
+                // TextField(
+                //   // P
+                //   controller: P_Controller,
+                //   keyboardType: TextInputType.number,
+                //   textAlign: TextAlign.left,
+                //   decoration: InputDecoration(
+                //     border: InputBorder.none,
+                //     hintText: 'PLEASE ENTER Phosphorus Content',
+                //     hintStyle: TextStyle(color: Colors.grey),
+                //   ),
+                // ),
+                SizedBox(height: 2),
+                TextFieldContainer(
+                  child: TextField(
+                    cursorColor: kPrimaryColor,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.photo_camera_front_outlined,
+                        color: kPrimaryColor,
+                      ),
+                      labelText: "Potassium Content",
+                      hintText: "PLEASE ENTER Potassium Content",
+                      border: InputBorder.none,
+                    ),
+                    controller: K_Controller,
+                  ),
+                ),
+                SizedBox(height: 2),
 
-            SizedBox(height: 12),
-            MaterialButton(
-              color: Colors.blue,
-              child: Text(
-                "predict",
-                style: TextStyle(fontSize: 25),
-              ),
+                // TextField(
+                //   // K
+                //   controller: K_Controller,
+                //   keyboardType: TextInputType.number,
+                //   textAlign: TextAlign.left,
+                //   decoration: InputDecoration(
+                //     border: InputBorder.none,
+                //     hintText: 'PLEASE ENTER Potassium Content',
+                //     hintStyle: TextStyle(color: Colors.grey),
+                //   ),
+                // ),
 
-              onPressed: Fertilizer_function,
-              //onPressed: () {
-              //  predData( 'abhi' );
-              //},
+                // TextField(                                           // Ph
+                //   controller: Ph_Controller,
+                //   keyboardType: TextInputType.number,
+                //   textAlign: TextAlign.left,
+                //   decoration: InputDecoration(
+                //     border: InputBorder.none,
+                //     hintText: 'PLEASE ENTER Ph value',
+                //     hintStyle: TextStyle(color: Colors.grey),
+                //   ),
+                // ),
+                //
+                // TextField(                                               // Rain
+                //   controller: Rain_Controller,
+                //   keyboardType: TextInputType.number,
+                //   textAlign: TextAlign.left,
+                //   decoration: InputDecoration(
+                //     border: InputBorder.none,
+                //     hintText: 'PLEASE ENTER Rain Content',
+                //     hintStyle: TextStyle(color: Colors.grey),
+                //   ),
+                // ),
+                //
+                TextFieldContainer(
+                  child: TextField(
+                    // Moist
+                    controller: Moist_Controller,
+                    keyboardType: TextInputType.number,
+                    cursorColor: kPrimaryColor,
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.photo_camera_front_outlined,
+                        color: kPrimaryColor,
+                      ),
+                      border: InputBorder.none,
+                      labelText: "Moist",
+                      hintText: 'PLEASE ENTER Moist',
+                    ),
+                  ),
+                ),
+                SizedBox(height: 2),
+                TextFieldContainer(
+                  child: TextField(
+                    cursorColor: kPrimaryColor,
+                    decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.photo_camera_front_outlined,
+                        color: kPrimaryColor,
+                      ),
+                      labelText: "City",
+                      hintText:
+                          "PLEASE ENTER City (Temp, Humidity feteched by API)",
+                      border: InputBorder.none,
+                    ),
+                    controller: City_Controller,
+                  ),
+                ),
+
+                // TextField(
+                //   // City
+                //   controller: City_Controller,
+
+                //   textAlign: TextAlign.left,
+                //   decoration: InputDecoration(
+                //     border: InputBorder.none,
+                //     hintText:
+                //         'PLEASE ENTER City (Temp, Humidity feteched by API)',
+                //     hintStyle: TextStyle(color: Colors.grey),
+                //   ),
+                // ),
+
+                // Text(
+                //   "change the input values in code to get the prediction",
+                //   style: TextStyle(fontSize: 16),
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    "Soil Type :  ".text.xl.make(),
+                    DropdownButton<Usertemp>(
+                      // Soil Type
+                      hint: new Text("Select Soil Type"),
+                      value: Soil_,
+                      onChanged: (Usertemp? newValue) {
+                        setState(() {
+                          Soil_ = newValue!;
+                        });
+                      },
+                      items: soil.map((Usertemp usertemp) {
+                        return new DropdownMenuItem<Usertemp>(
+                          value: usertemp,
+                          child: new Text(
+                            usertemp.name,
+                            style: new TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    "Crop Type :  ".text.xl.make(),
+                    DropdownButton<Usertemp>(
+                      // Crop Type
+                      hint: new Text("Select Crop Type"),
+                      value: Crop_,
+                      onChanged: (Usertemp? newValue) {
+                        setState(() {
+                          Crop_ = newValue!;
+                        });
+                      },
+                      items: crop.map((Usertemp usertemp) {
+                        return new DropdownMenuItem<Usertemp>(
+                          value: usertemp,
+                          child: new Text(
+                            usertemp.name,
+                            style: new TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 8),
+                MaterialButton(
+                  color: Colors.blue,
+                  child: Text(
+                    "predict",
+                    style: TextStyle(fontSize: 25),
+                  ),
+
+                  onPressed: Fertilizer_function,
+                  //onPressed: () {
+                  //  predData( 'abhi' );
+                  //},
+                ),
+                SizedBox(height: 8),
+                Text("This is fertilizer"),
+                Center(
+                  child: Text(
+                    "Predicted value :  $predValue ",
+                    style: TextStyle(color: Colors.red, fontSize: 23),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 12),
-            Text("This is fertilizer"),
-            Text(
-              "Predicted value :  $predValue ",
-              style: TextStyle(color: Colors.red, fontSize: 23),
-            ),
-          ],
+          ),
         ),
       ),
     );
