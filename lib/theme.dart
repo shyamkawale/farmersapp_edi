@@ -14,6 +14,18 @@ ThemeData theme() {
   );
 }
 
+AppBar customAppBar(String title) {
+  return AppBar(
+      title: Text(title),
+      // color: Colors.white,
+      backgroundColor: Colors.white,
+      elevation: 2,
+      // brightness: Brightness.light,
+      iconTheme: IconThemeData(color: Colors.black),
+      titleTextStyle: TextStyle(color: Color(0XFF8B8B8B), fontSize: 22),
+      centerTitle: true);
+}
+
 // InputDecorationTheme inputDecorationTheme() {
 //   OutlineInputBorder outlineInputBorder = OutlineInputBorder(
 //     borderRadius: BorderRadius.circular(28),

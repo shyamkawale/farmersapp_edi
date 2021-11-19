@@ -37,11 +37,21 @@ dependencies:
   firebase_database:
   flutter_spinkit:
   cloud_firestore:
+  firebase_storage:
 
   tflite_flutter: ^0.8.0
   math_expressions:
   font_awesome_flutter:
   http:
+
+  get: ^4.1.4
+  get_storage: ^2.0.2
+  image_picker: ^0.8.4+4
+  path:
+  path_provider:
+  velocity_x: ^3.0.0
+  async_button_builder:
+  pull_to_refresh:
 
 #  tflite_flutter:
 #  math_expressions: ^2.2.0

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:farmersapp_edi/components/already_have_an_account_acheck.dart';
 import 'package:farmersapp_edi/components/or_divider.dart';
 import 'package:farmersapp_edi/components/rounded_button.dart';
@@ -14,6 +16,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter/cupertino.dart';
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
+import 'package:velocity_x/velocity_x.dart';
 // import 'package:toast/toast.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -83,30 +86,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: TextField(
                       controller: email_controller,
                       cursorColor: kPrimaryColor,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         icon: Icon(
                           Icons.email,
                           color: kPrimaryColor,
                         ),
                         hintText: "Email",
+                        labelText: "Email",
                         border: InputBorder.none,
                       ),
                     ),
                   ),
-                  // TextFieldContainer(
-                  //   child: TextField(
-                  //     controller: mobile_controller,
-                  //     cursorColor: kPrimaryColor,
-                  //     decoration: InputDecoration(
-                  //       icon: Icon(
-                  //         Icons.phone_android,
-                  //         color: kPrimaryColor,
-                  //       ),
-                  //       hintText: "Mobile",
-                  //       border: InputBorder.none,
-                  //     ),
-                  //   ),
-                  // ),
                   TextFieldContainer(
                     child: TextField(
                       controller: password_controller,
@@ -120,6 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Icons.visibility,
                           color: kPrimaryColor,
                         ),
+                        labelText: "Password",
                         hintText: "Password",
                         border: InputBorder.none,
                       ),
@@ -128,14 +120,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   RoundedButton(
                     text: "SIGNUP",
                     press: signUpWithEmailPass,
-                    // press: () {
-                    //   // print(email_controller.text);
-                    //   // print(password_controller.text);
-                    // },
-                    // press: () {
-                    //   Navigator.push(context,
-                    //       MaterialPageRoute(builder: (context) => HomePage()));
-                    // },
                   ),
                   SizedBox(height: size.height * 0.03),
                   AlreadyHaveAnAccountCheck(
@@ -182,16 +166,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void signUpWithEmailPass() async {
-    User user;
+    UserCredential user;
     try {
       user = (await auth.createUserWithEmailAndPassword(
-          email: email_controller.text,
-          password: password_controller.text)) as User;
+          email: email_controller.text, password: password_controller.text));
+      VxToast.show(context,
+          msg: "you have succesfully registered",
+          position: VxToastPosition.bottom);
+      Navigator.pop(context);
     } catch (e) {
       print(e);
+      VxToast.show(context,
+          msg: e.toString(),
+          position: VxToastPosition.top,
+          showTime: 4000,
+          textColor: Colors.red,
+          bgColor: Colors.white);
     } finally {
-      // Toast.show("Registration Successful!", context);
-      Navigator.pop(context);
+      print("e again");
     }
   }
 }

@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       body: Body(user),
       bottomNavigationBar:
           CustomBottomNavBar(user: user, selectedMenu: MenuState.home),
